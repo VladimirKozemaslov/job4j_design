@@ -1,0 +1,39 @@
+package ru.job4j.iterator;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class EvenNumbersIterator implements Iterator<Integer> {
+
+    private int[] data;
+    private int index;
+
+    public EvenNumbersIterator(int[] data) {
+        this.data = data;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return indexOfEven() != -1;
+    }
+
+    @Override
+    public Integer next() {
+        if (!hasNext()) {
+            throw new NoSuchElementException();
+        }
+        index = indexOfEven() + 1;
+        return data[index - 1];
+
+    }
+
+    private int indexOfEven() {
+        for (int i = index; i < data.length; i++) {
+            if (data[i] % 2 == 0) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+}
