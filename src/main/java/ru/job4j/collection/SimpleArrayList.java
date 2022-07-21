@@ -75,13 +75,12 @@ public class SimpleArrayList<T> implements SimpleList<T> {
 
             @Override
             public T next() {
-                if (hasNext()) {
-                    T next = container[cursor];
-                    cursor++;
-                    return next;
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+                T next = container[cursor];
+                cursor++;
+                return next;
             }
         };
     }
