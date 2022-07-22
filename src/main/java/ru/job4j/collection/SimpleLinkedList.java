@@ -6,8 +6,6 @@ import java.util.*;
 
 public class SimpleLinkedList<E> implements LinkedList<E> {
 
-    private Node<E>[] container;
-
     private Node<E> first;
 
     private Node<E> last;
@@ -16,27 +14,16 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
     private int modCount;
 
-    public SimpleLinkedList() {
-        this.container = (Node<E>[]) new Object[10];
-    }
-
-    public SimpleLinkedList(int capacity) {
-        this.container = (Node<E>[]) new Object[capacity];
-    }
-
     @Override
     public void add(E value) {
-        if (size == container.length) {
-            grow();
-        }
-        if (size == 0) {
-            container[size] = new Node<E>(null, value, null);
-            first = container[size];
+        final Node<E> l = last;
+        final Node<E> newNode = new Node<>(l, value, null);
+        last = newNode;
+        if (l == null) {
+            first = newNode;
         } else {
-            container[size] = new Node<E>(container[size - 1], value, null);
-            container[size - 1].next = container[size];
+            l.next = newNode;
         }
-        last = container[size];
         size++;
         modCount++;
     }
@@ -44,7 +31,12 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         Objects.checkIndex(index, size);
-        return container[index].item;
+        Node<E> elem = first;
+        E rsl;
+        for (int i = 0; i < index; i++) {
+            elem = elem.next;
+        }
+        return elem.item;
     }
 
     @Override
@@ -67,29 +59,23 @@ public class SimpleLinkedList<E> implements LinkedList<E> {
 
             @Override
             public E next() {
-                if (hasNext()) {
-                    E next;
-                    if (cursor == 0) {
-                        next = first.item;
-                        elem = first.next;
-                    } else if (cursor == size - 1) {
-                        next = last.item;
-                    } else {
-                        next = elem.item;
-                        elem = elem.next;
-                    }
-                    cursor++;
-                    return next;
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
+                E next;
+                if (cursor == 0) {
+                    next = first.item;
+                    elem = first.next;
+                } else if (cursor == size - 1) {
+                    next = last.item;
+                } else {
+                    next = elem.item;
+                    elem = elem.next;
+                }
+                cursor++;
+                return next;
             }
-
         };
-    }
-
-    private void grow() {
-        container = Arrays.copyOf(container, container.length  * 2);
     }
 
     private static class Node<E> {
