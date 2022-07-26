@@ -7,26 +7,28 @@ import java.util.stream.Collectors;
 public class ListUtils {
     public static <T> void addBefore(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.nextIndex() == index) {
-                iterator.add(value);
-                break;
-            }
-            iterator.next();
-        }
+        list.add(index, value);
+//        ListIterator<T> iterator = list.listIterator();
+//        while (iterator.hasNext()) {
+//            if (iterator.nextIndex() == index) {
+//                iterator.add(value);
+//                break;
+//            }
+//            iterator.next();
+//        }
     }
 
     public static <T> void addAfter(List<T> list, int index, T value) {
         Objects.checkIndex(index, list.size());
-        ListIterator<T> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.previousIndex() == index) {
-                iterator.add(value);
-                break;
-            }
-            iterator.next();
-        }
+        list.add(index + 1, value);
+//        ListIterator<T> iterator = list.listIterator();
+//        while (iterator.hasNext()) {
+//            if (iterator.previousIndex() == index) {
+//                iterator.add(value);
+//                break;
+//            }
+//            iterator.next();
+//        }
     }
 
     public static <T> void removeIf(List<T> list, Predicate<T> filter) {
@@ -52,7 +54,7 @@ public class ListUtils {
 
     public static <T> void removeAll(List<T> list, List<T> elements) {
         for (T elem : elements) {
-            removeIf(list, x -> x == elem);
+            removeIf(list, x -> x.equals(elem));
         }
     }
 
