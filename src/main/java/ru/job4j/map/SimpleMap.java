@@ -62,7 +62,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         MapEntry<K, V> entry = table[idx];
         if (entry != null
                 && ((key != null && entry.key.hashCode() == key.hashCode() && entry.key.equals(key))
-                || (key == entry.key))
+                || (key == null && entry.key == null))
         ) {
             value = entry.value;
         }
@@ -76,7 +76,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
         MapEntry<K, V> entry = table[idx];
         if (entry != null
                 && ((key != null && entry.key.hashCode() == key.hashCode() && entry.key.equals(key))
-                || (key == entry.key))
+                || (key == null && entry.key == null))
         ) {
             table[idx] = null;
             count--;
@@ -135,19 +135,5 @@ public class SimpleMap<K, V> implements Map<K, V> {
             this.key = key;
             this.value = value;
         }
-
     }
-
-    public static void main(String[] args) {
-        SimpleMap<Integer, String> map = new SimpleMap<>();
-        map.put(1, "1");
-        map.put(2, "2");
-        map.put(3, "3");
-        map.put(4, "4");
-        System.out.println(map.size());
-        for (Integer key : map) {
-            System.out.println(map.get(key));
-        }
-    }
-
 }
