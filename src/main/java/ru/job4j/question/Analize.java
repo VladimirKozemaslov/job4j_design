@@ -1,20 +1,11 @@
 package ru.job4j.question;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public class Analize {
-
-    private static boolean isChange(Set<User> set, User user) {
-        boolean rsl = false;
-        for (User checkUser : set) {
-            if (checkUser.getId() == user.getId()) {
-                rsl = true;
-                break;
-            }
-        }
-        return rsl;
-    }
 
     public static Info diff(Set<User> previous, Set<User> current) {
         Info info = new Info(0, 0, 0);
@@ -23,8 +14,12 @@ public class Analize {
         addedAndChanged.removeAll(previous);
         deletedAndChanged.removeAll(current);
         int changed = 0;
+        Map<Integer, String> map = new HashMap<>();
         for (User user : addedAndChanged) {
-            if (isChange(previous, user)) {
+            map.put(user.getId(), user.getName());
+        }
+        for (User user : deletedAndChanged) {
+            if (map.containsKey(user.getId())) {
                 changed++;
             }
         }
