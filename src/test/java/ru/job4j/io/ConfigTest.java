@@ -25,27 +25,35 @@ class ConfigTest {
     void whenPairWithNoValue() {
         String path = "./data/pair_with_no_value.properties";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("surname=");
     }
 
     @Test
     void whenPairWithNoKey() {
         String path = "./data/pair_with_no_key.properties";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("=Presley");
     }
 
     @Test
     void whenPairWithNoKeyAndNoValue() {
         String path = "./data/pair_with_no_key_and_no_value.properties";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("=");
     }
 
     @Test
     void whenPairWithNoEqualSign() {
         String path = "./data/pair_with_no_equal_sign.properties";
         Config config = new Config(path);
-        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(config::load)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("surnamePresley");
     }
 }

@@ -24,7 +24,11 @@ public class Config {
                         if (str.startsWith("=")
                                 || ((str.indexOf('=') == str.lastIndexOf('=') && str.charAt(str.length() - 1) == '=')
                                 || str.indexOf('=') == -1)) {
-                            throw new IllegalArgumentException();
+                            String errMsg = "Ошибка в файле:"
+                                    + System.lineSeparator()
+                                    + "В строке:"
+                                    + System.lineSeparator() + str;
+                            throw new IllegalArgumentException(errMsg);
                         }
                     })
                     .forEach(str -> {
