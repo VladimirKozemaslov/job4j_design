@@ -20,17 +20,7 @@ public class Config {
         try (BufferedReader in = new BufferedReader(new FileReader(path))) {
             in.lines()
                     .filter(str -> str.length() != 0 && !str.startsWith("#"))
-                    .peek(str -> {
-                        if (str.startsWith("=")
-                                || ((str.indexOf('=') == str.lastIndexOf('=') && str.charAt(str.length() - 1) == '=')
-                                || str.indexOf('=') == -1)) {
-                            String errMsg = "Ошибка в файле:"
-                                    + System.lineSeparator()
-                                    + "В строке:"
-                                    + System.lineSeparator() + str;
-                            throw new IllegalArgumentException(errMsg);
-                        }
-                    })
+                    .peek(Config::propertiesCheck)
                     .forEach(str -> {
                 int delimiterIdx = str.indexOf('=');
                 String key = str.substring(0, delimiterIdx);
@@ -39,6 +29,18 @@ public class Config {
             });
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void propertiesCheck(String str) {
+        if (str.startsWith("=")
+                || ((str.indexOf('=') == str.lastIndexOf('=') && str.charAt(str.length() - 1) == '=')
+                || str.indexOf('=') == -1)) {
+            String errMsg = "Ошибка в файле:"
+                    + System.lineSeparator()
+                    + "В строке:"
+                    + System.lineSeparator() + str;
+            throw new IllegalArgumentException(errMsg);
         }
     }
 
