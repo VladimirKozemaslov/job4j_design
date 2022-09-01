@@ -22,7 +22,7 @@ public class Config {
                     .filter(str -> str.length() != 0 && !str.startsWith("#"))
                     .peek(str -> {
                         if (str.startsWith("=")
-                                || ((str.indexOf('=') == str.lastIndexOf('=') && str.charAt(str.length() - 1) == str.lastIndexOf('='))
+                                || ((str.indexOf('=') == str.lastIndexOf('=') && str.charAt(str.length() - 1) == '=')
                                 || str.indexOf('=') == -1)) {
                             throw new IllegalArgumentException();
                         }

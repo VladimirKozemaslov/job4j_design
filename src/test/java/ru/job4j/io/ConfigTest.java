@@ -22,8 +22,29 @@ class ConfigTest {
     }
 
     @Test
-    void whenPairWithWrongPattern() {
-        String path = "./data/pair_with_wrong_pattern.properties";
+    void whenPairWithNoValue() {
+        String path = "./data/pair_with_no_value.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenPairWithNoKey() {
+        String path = "./data/pair_with_no_key.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenPairWithNoKeyAndNoValue() {
+        String path = "./data/pair_with_no_key_and_no_value.properties";
+        Config config = new Config(path);
+        assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void whenPairWithNoEqualSign() {
+        String path = "./data/pair_with_no_equal_sign.properties";
         Config config = new Config(path);
         assertThatThrownBy(config::load).isInstanceOf(IllegalArgumentException.class);
     }
