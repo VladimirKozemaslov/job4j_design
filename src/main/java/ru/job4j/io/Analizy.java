@@ -23,7 +23,7 @@ public class Analizy {
         int delimiterIdx = line.indexOf(' ');
         String status = line.substring(0, delimiterIdx);
         String date = line.substring(delimiterIdx + 1);
-        if ((status.equals("400") || status.equals("500"))) {
+        if ("400".equals(status) || "500".equals(status)) {
             if (!isServerOff) {
                 isServerOff = true;
                 sb.append(date).append(";");
