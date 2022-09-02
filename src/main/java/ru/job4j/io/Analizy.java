@@ -8,13 +8,11 @@ public class Analizy {
 
     public void unavailable(String source, String target) {
         StringBuilder sb = new StringBuilder();
-        try (BufferedReader in = new BufferedReader(new FileReader(source))) {
-            PrintWriter out = new PrintWriter(
-                    new BufferedOutputStream(
-                            new FileOutputStream(target)));
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
+             PrintWriter out = new PrintWriter(new BufferedOutputStream(new FileOutputStream(target)))
+        ) {
             in.lines().forEach(str -> analyzeStr(str, sb));
             out.print(sb);
-            out.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
