@@ -7,38 +7,33 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
 
-    private List<File> files = new LinkedList<>();
-    private Set<FileProperty> unique = new HashSet<>();
-
-    private Set<FileProperty> nonUnique = new HashSet<>();
+    private Map<FileProperty, List<File>> files = new HashMap<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         File f = file.toFile();
-        if (!f.isDirectory()) {
-            files.add(f);
-            FileProperty fileProperty = new FileProperty(f.length(), f.getName());
-            if (!unique.add(fileProperty)) {
-                nonUnique.add(fileProperty);
-            }
+        FileProperty fileProperty = new FileProperty(f.length(), f.getName());
+        List<File> fList = files.get(fileProperty);
+        if (fList == null) {
+            fList = new ArrayList<>();
         }
+        fList.add(f);
+        files.put(fileProperty, fList);
 
         return super.visitFile(file, attrs);
     }
 
     public void printDuplicates() {
-        for (FileProperty originFp : this.nonUnique) {
-            System.out.println(String.format("%s - %f Mb", originFp.getName(), (double) originFp.getSize() / (1024 * 1024)));
-            for (File file : this.files) {
-                FileProperty duplicateFp = new FileProperty(file.length(), file.getName());
-                if (originFp.equals(duplicateFp)) {
+        for (Map.Entry<FileProperty, List<File>> pair : files.entrySet()) {
+            List<File> files = pair.getValue();
+            if (files.size() > 1) {
+                FileProperty fp = pair.getKey();
+                System.out.println(String.format("%s - %f Mb", fp.getName(), (double) fp.getSize() / (1024 * 1024)));
+                for (File file : files) {
                     System.out.println(String.format("    %s", file.getAbsolutePath()));
                 }
             }
