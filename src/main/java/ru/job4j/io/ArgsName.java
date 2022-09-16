@@ -10,7 +10,7 @@ public class ArgsName {
     public String get(String key) {
         String value = values.get(key);
         if (value == null) {
-            throw new IllegalArgumentException("Данный параметр не был передан");
+            throw new IllegalArgumentException(String.format("Параметр %s не был передан", key));
         }
         return value;
     }
