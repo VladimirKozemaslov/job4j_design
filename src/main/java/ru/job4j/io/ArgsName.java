@@ -15,6 +15,10 @@ public class ArgsName {
         return value;
     }
 
+    public Map<String, String> getValues() {
+        return values;
+    }
+
     private void parse(String[] args) {
         if (args.length == 0) {
             throw new IllegalArgumentException("Не передано ни одного параметра");
