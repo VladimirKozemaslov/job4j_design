@@ -20,9 +20,6 @@ public class Zip {
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        for (File source : sources) {
-//            packSingleFile(source, target);
-//        }
     }
 
     public void packSingleFile(File source, File target) {
@@ -54,11 +51,5 @@ public class Zip {
                 e.printStackTrace();
             }
         }
-
-//        Zip zip = new Zip();
-//        zip.packSingleFile(
-//                new File("./pom.xml"),
-//                new File("./pom.zip")
-//        );
     }
 }
