@@ -9,8 +9,8 @@ import java.util.function.Predicate;
 
 public class Search {
     public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            throw new IllegalArgumentException("Root folder is null. Usage  ROOT_FOLDER.");
+        if (args.length != 2) {
+            throw new IllegalArgumentException("Parameters number must be equal two.");
         }
         if (!args[1].startsWith(".")) {
             throw new IllegalArgumentException("File extension should start with '.'");
