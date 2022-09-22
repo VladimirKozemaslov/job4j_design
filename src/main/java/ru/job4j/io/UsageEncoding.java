@@ -1,12 +1,13 @@
 package ru.job4j.io;
 
 import java.io.*;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 public class UsageEncoding {
     public String readFile(String path) {
         StringBuilder builder = new StringBuilder();
-        try (BufferedReader br = new BufferedReader(new FileReader(path, Charset.forName("WINDOWS-1251")))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(path, StandardCharsets.UTF_8))) {
             br.lines()
                     .map(s -> s + System.lineSeparator())
                     .forEach(builder::append);
@@ -16,9 +17,9 @@ public class UsageEncoding {
         return builder.toString();
     }
 
-    public void writeDataInFile(String path, String data) {
-        try (PrintWriter pw = new PrintWriter(new FileWriter(path, true))) {
-            pw.println(data);
+    public void writeDataInFile(String path, List<String> data) {
+        try (PrintWriter pw = new PrintWriter(new FileWriter(path, StandardCharsets.UTF_8, true))) {
+            data.forEach(pw::println);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,6 +28,14 @@ public class UsageEncoding {
     public static void main(String[] args) {
         String path = "./data/text.txt";
         UsageEncoding encoding = new UsageEncoding();
+        List<String> strings = List.of(
+                "Новая строка 1",
+                "Новая строка 2",
+                "Новая строка 3",
+                "Новая строка 4",
+                "Новая строка 5"
+        );
+        encoding.writeDataInFile(path, strings);
         String s = encoding.readFile(path);
         System.out.println("Данные из файла: ");
         System.out.println(s);
