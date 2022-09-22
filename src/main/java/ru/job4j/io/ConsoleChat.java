@@ -23,11 +23,11 @@ public class ConsoleChat {
             List<String> log = new LinkedList<>();
             boolean isBotAnswer = true;
             String userLastMsg = reader.readLine();
-            while (!userLastMsg.equals(OUT)) {
+            while (!OUT.equals(userLastMsg)) {
                 log.add(userLastMsg);
-                if (userLastMsg.equals(STOP)) {
+                if (STOP.equals(userLastMsg)) {
                     isBotAnswer = false;
-                } else if (userLastMsg.equals(CONTINUE)) {
+                } else if (CONTINUE.equals(userLastMsg)) {
                     isBotAnswer = true;
                 }
                 if (isBotAnswer) {
