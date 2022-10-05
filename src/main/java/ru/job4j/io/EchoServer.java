@@ -6,6 +6,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class EchoServer {
     public static void main(String[] args) throws IOException {
@@ -15,12 +16,17 @@ public class EchoServer {
                 try (OutputStream out = socket.getOutputStream();
                      BufferedReader in = new BufferedReader(
                              new InputStreamReader(socket.getInputStream()))) {
+                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     String request = in.readLine();
                     Map<String, String> params = getParams(request);
-                    if ("Bye".equals(params.get("msg"))) {
-                        server.close();
+                    Optional<String> msg = Optional.ofNullable(params.get("msg"));
+                    if (msg.isPresent()) {
+                        switch (msg.get()) {
+                            case "Hello" -> out.write("Hello".getBytes());
+                            case "Exit" ->  server.close();
+                            default -> out.write("What".getBytes());
+                        }
                     }
-                    out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes());
                     System.out.println(request);
                     for (String str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
