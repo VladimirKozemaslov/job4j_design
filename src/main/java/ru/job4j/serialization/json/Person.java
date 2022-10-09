@@ -3,6 +3,7 @@ package ru.job4j.serialization.json;
 import java.util.Arrays;
 
 public class Person {
+
     private final boolean sex;
     private final int age;
     private final Contact contact;
@@ -13,6 +14,22 @@ public class Person {
         this.age = age;
         this.contact = contact;
         this.statuses = statuses;
+    }
+
+    public boolean isSex() {
+        return sex;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public Contact getContact() {
+        return contact;
+    }
+
+    public String[] getStatuses() {
+        return statuses;
     }
 
     @Override

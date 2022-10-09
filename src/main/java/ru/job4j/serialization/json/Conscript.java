@@ -20,6 +20,26 @@ public class Conscript {
         this.skills = skills;
     }
 
+    public boolean isHasHigherEducation() {
+        return hasHigherEducation;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public int getStockCategory() {
+        return stockCategory;
+    }
+
+    public Person getPerson() {
+        return person;
+    }
+
+    public String[] getSkills() {
+        return skills;
+    }
+
     @Override
     public String toString() {
         return "Conscript{"
