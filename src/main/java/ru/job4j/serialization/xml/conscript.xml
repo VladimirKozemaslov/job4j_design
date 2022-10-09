@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" ?>
+<conscript hasHigherEducation="true" sprciality="Driver">
+    <stockCategory>837</stockCategory>
+    <person>
+        <sex>true</sex>
+        <age>25</age>
+        <contact>
+            <phone>+123456</phone>
+        </contact>
+        <statuses>
+            <status>Married</status>
+            <status>Worker</status>
+        </statuses>
+    </person>
+    <skills>
+        <skill>Driving</skill>
+        <skill>Swimming</skill>
+    </skills>
+</conscript>
