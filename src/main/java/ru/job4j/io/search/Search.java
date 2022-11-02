@@ -31,7 +31,6 @@ public class  Search {
                 case "regex" -> p -> Pattern.matches(searchValue, p.getFileName().toString());
                 default -> throw new IllegalArgumentException("Недопустимое значение параметра t");
             };
-//            System.out.println(Pattern.quote(searchValue));
             search(startDir, condition)
                     .forEach(path -> sb.append(path.getFileName()).append(System.lineSeparator()));
             writer.write(sb.toString());
