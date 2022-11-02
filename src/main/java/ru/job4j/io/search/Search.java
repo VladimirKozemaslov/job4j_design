@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
+import java.util.regex.Pattern;
 
 public class  Search {
 
@@ -27,9 +28,10 @@ public class  Search {
             condition = switch (searchType) {
                 case "mask" -> p -> p.getFileName().toString().endsWith(searchValue);
                 case "name" -> p -> p.getFileName().toString().equals(searchValue);
-                case "regex" -> p -> p.getFileName().toString().matches(searchValue);
+                case "regex" -> p -> Pattern.matches(searchValue, p.getFileName().toString());
                 default -> throw new IllegalArgumentException("Недопустимое значение параметра t");
             };
+//            System.out.println(Pattern.quote(searchValue));
             search(startDir, condition)
                     .forEach(path -> sb.append(path.getFileName()).append(System.lineSeparator()));
             writer.write(sb.toString());
