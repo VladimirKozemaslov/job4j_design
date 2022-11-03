@@ -45,14 +45,6 @@ public class  Search {
     }
 
     private static String maskToRegex(String mask) {
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < mask.length(); i++) {
-            char ch = mask.charAt(i);
-            switch (ch) {
-                case '*', '?' -> sb.append("\\w").append(ch);
-                default -> sb.append(ch);
-            }
-        }
-        return sb.toString();
+        return "^" + mask.replace(".", "[.]").replace("*", ".*").replace("?", ".") + "$";
     }
 }
