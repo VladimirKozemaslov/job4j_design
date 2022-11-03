@@ -1,2 +1,10 @@
+readme.txt
 404.txt
+bot_answers.txt
+chat_log.txt
+text.txt
+even.txt
+input.txt
 log.txt
+multiplication_table.txt
+result.txt

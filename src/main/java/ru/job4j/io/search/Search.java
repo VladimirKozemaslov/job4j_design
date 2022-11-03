@@ -19,16 +19,15 @@ public class  Search {
         }
         Path startDir = Paths.get(values.get("d"));
         String searchType = values.get("t");
-        String searchValue = values.get("n");
+        String searchValue = searchType.equals("mask") ? maskToRegex(values.get("n")) : values.get("n");
         Path output = Paths.get(values.get("o"));
         StringBuilder sb = new StringBuilder();
         Predicate<Path> condition;
 
         try (PrintWriter writer = new PrintWriter(new BufferedOutputStream(new FileOutputStream(output.toFile())))) {
             condition = switch (searchType) {
-                case "mask" -> p -> p.getFileName().toString().endsWith(searchValue);
                 case "name" -> p -> p.getFileName().toString().equals(searchValue);
-                case "regex" -> p -> Pattern.matches(searchValue, p.getFileName().toString());
+                case "regex", "mask" -> p -> Pattern.matches(searchValue, p.getFileName().toString());
                 default -> throw new IllegalArgumentException("Недопустимое значение параметра t");
             };
             search(startDir, condition)
@@ -43,5 +42,17 @@ public class  Search {
         SearchFiles searcher = new SearchFiles(condition);
         Files.walkFileTree(root, searcher);
         return searcher.getPaths();
+    }
+
+    private static String maskToRegex(String mask) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < mask.length(); i++) {
+            char ch = mask.charAt(i);
+            switch (ch) {
+                case '*', '?' -> sb.append("\\w").append(ch);
+                default -> sb.append(ch);
+            }
+        }
+        return sb.toString();
     }
 }
