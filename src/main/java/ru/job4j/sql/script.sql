@@ -6,11 +6,11 @@ create table cars (
 );
 
 insert into cars(mark, num, production_date) values 
-('Skoda Octavia A7', 321, to_date('14.09.2014', 'DD.MM.YYYY'));
+('Skoda Octavia A7', 321, to_date('2014-14-09', 'YYYY-DD-MM'));
 
 select * from cars;
 
-update cars set production_date = to_date('25.09.2014', 'DD.MM.YYYY');
+update cars set production_date = to_date('2014-25-09', 'YYYY-DD-MM');
 
 select * from cars;
 
