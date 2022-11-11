@@ -15,45 +15,65 @@ create table devices_people(
     people_id int references people(id)
 );
 
-insert into devices(name, price) values
+insert into
+devices(name, price)
+values
 ('Xiaomi redmi 10C', 17800),
 ('Apple iphone 13', 86800),
 ('ZTE 4T', 16900),
 ('Huawei 10Pro', 22000),
 ('Nokia 3310', 2000);
 
-insert into people(name) values
+insert into
+people(name)
+values
 ('Silvester Stallone'),
 ('Arnold Shwarznegger'),
 ('Leonardo DiCaprio'),
 ('Quentin Tarantino'),
 ('Mila Yovovich');
 
-insert into devices_people(device_id, people_id) values
-((select id from devices where name like 'Xia%'), (select id from people where name like 'Silv%')),
-((select id from devices where name like 'Nok%'), (select id from people where name like 'Silv%')),
-((select id from devices where name like 'Hua%'), (select id from people where name like 'Silv%')),
-((select id from devices where name like 'App%'), (select id from people where name like 'Arn%')),
-((select id from devices where name like 'Z%'), (select id from people where name like 'Arn%')),
-((select id from devices where name like 'Hua%'), (select id from people where name like 'Arn%')),
-((select id from devices where name like 'Hua%'), (select id from people where name like 'Leo%')),
-((select id from devices where name like 'Nok%'), (select id from people where name like 'Leo%')),
-((select id from devices where name like 'App%'), (select id from people where name like 'Que%')),
-((select id from devices where name like 'Nok%'), (select id from people where name like 'Que%')),
-((select id from devices where name like 'App%'), (select id from people where name like 'Mil%')),
-((select id from devices where name like 'Xia%'), (select id from people where name like 'Mil%')),
-((select id from devices where name like 'Hua%'), (select id from people where name like 'Mil%')),
-((select id from devices where name like 'Z%'), (select id from people where name like 'Mil%'));
+select * from devices;
+
+select * from people;
+
+insert into
+devices_people(device_id, people_id)
+values
+(1, 1),
+(5, 1),
+(4, 1),
+(2, 2),
+(3, 2),
+(4, 2),
+(4, 3),
+(5, 3),
+(2, 4),
+(5, 4),
+(2, 5),
+(1, 5),
+(4, 5),
+(3, 5);
 
 select avg(price) from devices;
 
-select p.name as name, avg(d.price) from
-    devices d inner join devices_people dp on d.id = dp.device_id
-    inner join people p on dp.people_id = p.id
+select
+p.name as name,
+avg(d.price)
+from
+devices d inner join devices_people dp
+    on d.id = dp.device_id
+inner join people p
+    on dp.people_id = p.id
 group by p.name;
 
-select p.name as name, avg(d.price) from
-    devices d inner join devices_people dp on d.id = dp.device_id
-    inner join people p on dp.people_id = p.id
+select
+p.name as name,
+avg(d.price)
+from
+devices d inner join devices_people dp
+    on d.id = dp.device_id
+inner join people p on
+    dp.people_id = p.id
 group by p.name
 having avg(d.price) > 5000;
