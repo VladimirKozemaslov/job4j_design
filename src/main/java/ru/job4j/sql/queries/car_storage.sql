@@ -65,3 +65,11 @@ select ct.* from
 car_transmissions ct left join cars c
     on ct.id = c.transmission_id
 where c.transmission_id is null;
+
+select c.name, cb.name as body, ce.name as engine, ct.name as transmission from
+cars c left join car_bodies cb
+    on cb.id = c.body_id
+left join car_engines ce
+    on ce.id = c.engine_id
+left join car_transmissions ct
+    on ct.id = c.transmission_id;
