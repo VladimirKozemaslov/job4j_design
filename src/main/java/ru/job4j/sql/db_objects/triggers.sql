@@ -31,10 +31,8 @@ create or replace function taxBefore()
     returns trigger as
 $$
     BEGIN
-        update products
-        set price = price + price * 0.2
-        where id = new.id;
-        return NEW;
+        new.price = new.price + new.price * 0.2;
+        return new;
     END;
 $$
 LANGUAGE 'plpgsql';
@@ -61,7 +59,7 @@ $$
     BEGIN
         insert into history_of_price(name, price, date)
         values
-        ((select name from inserted), (select price from inserted), CURRENT_TIMESTAMP);
+        (new.name, new.price, CURRENT_TIMESTAMP);
         return new;
     END;
 $$
@@ -69,8 +67,7 @@ LANGUAGE 'plpgsql';
 
 create trigger addToHistory_trigger
     after insert on products
-    referencing new table
-    for each statement
+    for each row
     execute procedure addToHistory();
 
 insert into products (name, producer, count, price) VALUES ('product_6', 'producer_2', 11, 200);
@@ -79,6 +76,7 @@ insert into products (name, producer, count, price) VALUES ('product_7', 'produc
 select * from products;
 
 select * from history_of_price;
+
 
 
 
