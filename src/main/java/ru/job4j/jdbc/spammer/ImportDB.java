@@ -22,9 +22,15 @@ public class ImportDB {
     public List<User> load() throws IOException {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             return rd.lines()
-                    .map(str -> str.split(";"))
+                    .map(str -> str.split(";")).peek(this::checkInfo)
                     .map(arr -> new User(arr[0], arr[1]))
                     .collect(Collectors.toList());
+        }
+    }
+
+    private void checkInfo(String[] arr) {
+        if (arr.length != 2 || arr[0].isEmpty() || arr[1].isEmpty()) {
+            throw new IllegalArgumentException();
         }
     }
 
