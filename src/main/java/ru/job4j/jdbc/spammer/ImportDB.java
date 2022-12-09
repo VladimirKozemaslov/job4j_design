@@ -22,7 +22,8 @@ public class ImportDB {
     public List<User> load() throws IOException {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             return rd.lines()
-                    .map(str -> str.split(";")).peek(this::checkInfo)
+                    .map(str -> str.split(";"))
+                    .peek(this::checkInfo)
                     .map(arr -> new User(arr[0], arr[1]))
                     .collect(Collectors.toList());
         }
