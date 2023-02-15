@@ -14,23 +14,12 @@ public class MaxMin {
     }
 
     private <T> T getValue(List<T> value, Comparator<T> comparator, Predicate<Integer> predicate) {
-        T rsl;
-        switch (value.size()) {
-            case 0:
-                rsl = null;
-                break;
-            case 1:
-                rsl = value.get(0);
-                break;
-            default:
-                rsl = value.get(0);
-                for (int i = 1; i < value.size(); i++) {
-                    T item = value.get(i);
-                    if (!predicate.test(comparator.compare(rsl, item))) {
-                        rsl = item;
-                    }
-                }
-                break;
+        T rsl = value.size() > 0 ? value.get(0) : null;
+        for (int i = 1; i < value.size(); i++) {
+            T item = value.get(i);
+            if (!predicate.test(comparator.compare(rsl, item))) {
+                rsl = item;
+            }
         }
         return rsl;
     }
