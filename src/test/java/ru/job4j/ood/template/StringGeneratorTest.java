@@ -1,13 +1,12 @@
 package ru.job4j.ood.template;
 
-import junit.framework.TestCase;
 import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-public class StringGeneratorTest extends TestCase {
+public class StringGeneratorTest {
     @Test
     public void whenResultMatchesHelloBorisMyNameIsVladimir() {
         Generator generator = new StringGenerator();
