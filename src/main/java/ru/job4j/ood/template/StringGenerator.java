@@ -9,7 +9,7 @@ public class StringGenerator implements Generator {
                 && args.containsKey("name")
                 && args.containsKey("subject")
                 && args.size() == 2)  {
-            return "Hello Boris, my name is Vladimir.";
+            return "Hello Boris, my name is Vladimirr.";
         } else {
             throw new IllegalArgumentException();
         }
