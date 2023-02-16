@@ -17,7 +17,7 @@ public class MaxMin {
         T rsl = value.size() > 0 ? value.get(0) : null;
         for (int i = 1; i < value.size(); i++) {
             T item = value.get(i);
-            if (!predicate.test(comparator.compare(rsl, item))) {
+            if (predicate.test(comparator.compare(item, rsl))) {
                 rsl = item;
             }
         }
