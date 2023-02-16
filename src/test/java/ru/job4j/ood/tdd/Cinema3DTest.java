@@ -32,7 +32,7 @@ public class Cinema3DTest {
     public void whenFindNoSessionsThenNull() {
         Cinema cinema = new Cinema3D();
         List<Session> sessions = cinema.find(ses -> false);
-        assertThat(sessions).isNull();
+        assertThat(sessions.size()).isEqualTo(0);
     }
 
     @Test
