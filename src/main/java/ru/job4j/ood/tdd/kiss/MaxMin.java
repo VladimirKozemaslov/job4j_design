@@ -1,4 +1,4 @@
-package ru.job4j.ood.kiss;
+package ru.job4j.ood.tdd.kiss;
 
 import java.util.Comparator;
 import java.util.List;

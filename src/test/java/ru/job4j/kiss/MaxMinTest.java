@@ -1,7 +1,7 @@
 package ru.job4j.kiss;
 
 import org.junit.jupiter.api.Test;
-import ru.job4j.ood.kiss.MaxMin;
+import ru.job4j.ood.tdd.kiss.MaxMin;
 
 import java.util.ArrayList;
 import java.util.List;

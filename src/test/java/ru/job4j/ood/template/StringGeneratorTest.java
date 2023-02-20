@@ -2,6 +2,9 @@ package ru.job4j.ood.template;
 
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import ru.job4j.ood.tdd.template.Generator;
+import ru.job4j.ood.tdd.template.StringGenerator;
+
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;

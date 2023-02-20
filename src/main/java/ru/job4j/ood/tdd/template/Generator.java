@@ -1,4 +1,4 @@
-package ru.job4j.ood.template;
+package ru.job4j.ood.tdd.template;
 
 import java.util.Map;
 
