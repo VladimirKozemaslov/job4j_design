@@ -36,4 +36,18 @@ public class MaxMinTest {
         List<Integer> list = List.of(11);
         assertThat(maxMin.min(list, Integer::compare)).isEqualTo(11);
     }
+
+    @Test
+    void whenTwoMinValuesExists() {
+        MaxMin maxMin = new MaxMin();
+        List<Integer> list = List.of(1, 5, -6, 8, 13, -6, 11);
+        assertThat(maxMin.min(list, Integer::compare)).isEqualTo(-6);
+    }
+
+    @Test
+    void whenTwoMaxValuesExists() {
+        MaxMin maxMin = new MaxMin();
+        List<Integer> list = List.of(1, 5, 8, 13, -6, 13, 11);
+        assertThat(maxMin.max(list, Integer::compare)).isEqualTo(13);
+    }
 }

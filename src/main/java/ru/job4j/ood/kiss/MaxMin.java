@@ -2,7 +2,7 @@ package ru.job4j.ood.kiss;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.Predicate;
+import java.util.function.IntPredicate;
 
 public class MaxMin {
     public <T> T max(List<T> value, Comparator<T> comparator) {
@@ -13,10 +13,9 @@ public class MaxMin {
         return getValue(value, comparator, (num -> num < 0));
     }
 
-    private <T> T getValue(List<T> value, Comparator<T> comparator, Predicate<Integer> predicate) {
-        T rsl = value.size() > 0 ? value.get(0) : null;
-        for (int i = 1; i < value.size(); i++) {
-            T item = value.get(i);
+    private <T> T getValue(List<T> value, Comparator<T> comparator, IntPredicate predicate) {
+        T rsl = value.isEmpty() ? null : value.get(0);
+        for (T item : value) {
             if (predicate.test(comparator.compare(item, rsl))) {
                 rsl = item;
             }
