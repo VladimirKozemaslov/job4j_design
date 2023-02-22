@@ -1,0 +1,40 @@
+package ru.job4j.ood.srp.report;
+
+import ru.job4j.ood.srp.formatter.DateTimeParser;
+import ru.job4j.ood.srp.model.Employee;
+import ru.job4j.ood.srp.store.Store;
+
+import java.util.Calendar;
+import java.util.function.Predicate;
+
+public class ReportEngine implements Report {
+
+    protected final Store store;
+    protected final DateTimeParser<Calendar> dateTimeParser;
+
+    public ReportEngine(Store store, DateTimeParser<Calendar> dateTimeParser) {
+        this.store = store;
+        this.dateTimeParser = dateTimeParser;
+    }
+
+    @Override
+    public String generate(Predicate<Employee> filter) {
+        StringBuilder text = new StringBuilder();
+        addHead(text);
+        store.findBy(filter).forEach(e -> addRecord(text, e));
+        return text.toString();
+    }
+
+    protected void addHead(StringBuilder text) {
+        text.append("Name; Hired; Fired; Salary;")
+                .append(System.lineSeparator());
+    }
+
+    protected void addRecord(StringBuilder text, Employee employee) {
+        text.append(employee.getName()).append(" ")
+                .append(dateTimeParser.parse(employee.getHired())).append(" ")
+                .append(dateTimeParser.parse(employee.getFired())).append(" ")
+                .append(employee.getSalary())
+                .append(System.lineSeparator());
+    }
+}
