@@ -1,8 +1,6 @@
 package ru.job4j.ood.srp.report;
 
 import org.junit.jupiter.api.Test;
-import ru.job4j.ood.srp.formatter.DateTimeParser;
-import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
 import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.MemStore;
 
@@ -18,11 +16,10 @@ public class HRReportTest {
         Employee worker1 = new Employee("Ivan", now, now, 100);
         Employee worker2 = new Employee("Petr", now, now, 150);
         Employee worker3 = new Employee("Dmitry", now, now, 200);
-        DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         store.add(worker1);
         store.add(worker2);
         store.add(worker3);
-        Report report = new HRReport(store, parser);
+        Report report = new HRReport(store);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Salary;")
                 .append(System.lineSeparator())

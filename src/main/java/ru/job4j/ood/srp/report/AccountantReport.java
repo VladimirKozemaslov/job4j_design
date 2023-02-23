@@ -8,19 +8,30 @@ import ru.job4j.ood.srp.model.Employee;
 import ru.job4j.ood.srp.store.Store;
 
 import java.util.Calendar;
+import java.util.function.Predicate;
 
-public class AccountantReport extends ReportEngine {
+public class AccountantReport implements Report {
+    private final Store store;
+    private final DateTimeParser<Calendar> dateTimeParser;
+
     public AccountantReport(Store store, DateTimeParser<Calendar> dateTimeParser) {
-        super(store, dateTimeParser);
+        this.store = store;
+        this.dateTimeParser = dateTimeParser;
     }
 
     @Override
-    protected void addRecord(StringBuilder text, Employee employee) {
+    public String generate(Predicate<Employee> filter) {
+        StringBuilder text = new StringBuilder();
         CurrencyConverter converter = new InMemoryCurrencyConverter();
-        text.append(employee.getName()).append(" ")
-                .append(dateTimeParser.parse(employee.getHired())).append(" ")
-                .append(dateTimeParser.parse(employee.getFired())).append(" ")
-                .append(converter.convert(Currency.RUB, employee.getSalary(), Currency.USD))
+        text.append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator());
+        for (Employee employee : store.findBy(filter)) {
+            text.append(employee.getName()).append(" ")
+                    .append(dateTimeParser.parse(employee.getHired())).append(" ")
+                    .append(dateTimeParser.parse(employee.getFired())).append(" ")
+                    .append(converter.convert(Currency.RUB, employee.getSalary(), Currency.USD))
+                    .append(System.lineSeparator());
+        }
+        return text.toString();
     }
 }
