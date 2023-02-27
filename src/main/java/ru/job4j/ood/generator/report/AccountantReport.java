@@ -1,20 +1,23 @@
-package ru.job4j.ood.srp.report;
+package ru.job4j.ood.generator.report;
 
-import ru.job4j.ood.srp.formatter.DateTimeParser;
-import ru.job4j.ood.srp.model.Employee;
-import ru.job4j.ood.srp.store.Store;
+import ru.job4j.ood.generator.currency.Currency;
+import ru.job4j.ood.generator.currency.CurrencyConverter;
+import ru.job4j.ood.generator.formatter.DateTimeParser;
+import ru.job4j.ood.generator.model.Employee;
+import ru.job4j.ood.generator.store.Store;
 
 import java.util.Calendar;
 import java.util.function.Predicate;
 
-public class ReportEngine implements Report {
-
+public class AccountantReport implements Report {
     private final Store store;
     private final DateTimeParser<Calendar> dateTimeParser;
+    private final CurrencyConverter converter;
 
-    public ReportEngine(Store store, DateTimeParser<Calendar> dateTimeParser) {
+    public AccountantReport(Store store, DateTimeParser<Calendar> dateTimeParser, CurrencyConverter converter) {
         this.store = store;
         this.dateTimeParser = dateTimeParser;
+        this.converter = converter;
     }
 
     @Override
@@ -26,7 +29,7 @@ public class ReportEngine implements Report {
             text.append(employee.getName()).append(" ")
                     .append(dateTimeParser.parse(employee.getHired())).append(" ")
                     .append(dateTimeParser.parse(employee.getFired())).append(" ")
-                    .append(employee.getSalary())
+                    .append(converter.convert(Currency.RUB, employee.getSalary(), Currency.USD))
                     .append(System.lineSeparator());
         }
         return text.toString();

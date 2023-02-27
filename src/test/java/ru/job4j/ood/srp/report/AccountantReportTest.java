@@ -1,13 +1,15 @@
 package ru.job4j.ood.srp.report;
 
 import org.junit.jupiter.api.Test;
-import ru.job4j.ood.srp.currency.Currency;
-import ru.job4j.ood.srp.currency.CurrencyConverter;
-import ru.job4j.ood.srp.currency.InMemoryCurrencyConverter;
-import ru.job4j.ood.srp.formatter.DateTimeParser;
-import ru.job4j.ood.srp.formatter.ReportDateTimeParser;
-import ru.job4j.ood.srp.model.Employee;
-import ru.job4j.ood.srp.store.MemStore;
+import ru.job4j.ood.generator.currency.Currency;
+import ru.job4j.ood.generator.currency.CurrencyConverter;
+import ru.job4j.ood.generator.currency.InMemoryCurrencyConverter;
+import ru.job4j.ood.generator.formatter.DateTimeParser;
+import ru.job4j.ood.generator.formatter.ReportDateTimeParser;
+import ru.job4j.ood.generator.model.Employee;
+import ru.job4j.ood.generator.report.AccountantReport;
+import ru.job4j.ood.generator.report.Report;
+import ru.job4j.ood.generator.store.MemStore;
 
 import java.util.Calendar;
 
@@ -21,8 +23,8 @@ public class AccountantReportTest {
         Employee worker = new Employee("Ivan", now, now, 100);
         DateTimeParser<Calendar> parser = new ReportDateTimeParser();
         store.add(worker);
-        Report report = new AccountantReport(store, parser);
         CurrencyConverter converter = new InMemoryCurrencyConverter();
+        Report report = new AccountantReport(store, parser, converter);
         StringBuilder expect = new StringBuilder()
                 .append("Name; Hired; Fired; Salary;")
                 .append(System.lineSeparator())

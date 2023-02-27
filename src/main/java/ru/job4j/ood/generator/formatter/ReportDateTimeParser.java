@@ -1,4 +1,4 @@
-package ru.job4j.ood.srp.formatter;
+package ru.job4j.ood.generator.formatter;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -11,4 +11,5 @@ public class ReportDateTimeParser implements DateTimeParser<Calendar> {
     public String parse(Calendar calendar) {
         return DATE_FORMAT.format(calendar.getTime());
     }
+
 }

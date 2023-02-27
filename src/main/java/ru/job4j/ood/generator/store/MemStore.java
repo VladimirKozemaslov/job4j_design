@@ -1,6 +1,6 @@
-package ru.job4j.ood.srp.store;
+package ru.job4j.ood.generator.store;
 
-import ru.job4j.ood.srp.model.Employee;
+import ru.job4j.ood.generator.model.Employee;
 
 import java.util.ArrayList;
 import java.util.List;

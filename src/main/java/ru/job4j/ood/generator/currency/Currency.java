@@ -1,4 +1,4 @@
-package ru.job4j.ood.srp.currency;
+package ru.job4j.ood.generator.currency;
 
 public enum Currency {
     RUB, USD, EUR
