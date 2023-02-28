@@ -1,7 +1,6 @@
 package ru.job4j.ood.generator.report;
 
 import ru.job4j.ood.generator.model.Employee;
-import ru.job4j.ood.generator.store.MemStore;
 import ru.job4j.ood.generator.store.Store;
 
 import javax.xml.bind.JAXBContext;
@@ -43,7 +42,7 @@ public class XMLReport implements Report {
     }
 
     public static class CalendarAdapter extends XmlAdapter<String, Calendar> {
-        private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd:MM:yyyy HH:mm");
+        private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy");
 
         @Override
         public Calendar unmarshal(String s) throws Exception {
@@ -73,16 +72,5 @@ public class XMLReport implements Report {
             e.printStackTrace();
         }
         return xml;
-    }
-
-    public static void main(String[] args) {
-        Calendar now = Calendar.getInstance();
-        MemStore store = new MemStore();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        Employee worker2 = new Employee("Petr", now, now, 200);
-        store.add(worker);
-        store.add(worker2);
-        Report report = new XMLReport(store);
-        System.out.println(report.generate(em -> true));
     }
 }
