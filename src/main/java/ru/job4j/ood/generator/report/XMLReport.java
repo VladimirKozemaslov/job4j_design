@@ -4,6 +4,7 @@ import ru.job4j.ood.generator.model.Employee;
 import ru.job4j.ood.generator.store.Store;
 
 import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.annotation.*;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
@@ -15,30 +16,14 @@ import java.util.function.Predicate;
 
 public class XMLReport implements Report {
     private final Store store;
+    private final Marshaller marshaller;
 
-    public XMLReport(Store store) {
+    public XMLReport(Store store) throws JAXBException {
         this.store = store;
-    }
-
-    @XmlRootElement(name = "employees")
-    @XmlAccessorType(XmlAccessType.FIELD)
-    private static class Employees {
-        @XmlElement(name = "employee")
-        private List<Employee> employees;
-
-        public Employees() { }
-
-        public Employees(List<Employee> employees) {
-            this.employees = employees;
-        }
-
-        public List<Employee> getEmployees() {
-            return employees;
-        }
-
-        public void setUsers(List<Employee> employees) {
-            this.employees = employees;
-        }
+        JAXBContext context = JAXBContext.newInstance(Employees.class);
+        Marshaller marshaller = context.createMarshaller();
+        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+        this.marshaller = marshaller;
     }
 
     public static class CalendarAdapter extends XmlAdapter<String, Calendar> {
@@ -61,9 +46,6 @@ public class XMLReport implements Report {
     public String generate(Predicate<Employee> filter) {
         String xml = "";
         try {
-            JAXBContext context = JAXBContext.newInstance(Employees.class);
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
             List<Employee> employees = store.findBy(filter);
             StringWriter writer = new StringWriter();
             marshaller.marshal(new Employees(employees), writer);
@@ -72,5 +54,26 @@ public class XMLReport implements Report {
             e.printStackTrace();
         }
         return xml;
+    }
+
+    @XmlRootElement(name = "employees")
+    @XmlAccessorType(XmlAccessType.FIELD)
+    private static class Employees {
+        @XmlElement(name = "employee")
+        private List<Employee> employees;
+
+        public Employees() { }
+
+        public Employees(List<Employee> employees) {
+            this.employees = employees;
+        }
+
+        public List<Employee> getEmployees() {
+            return employees;
+        }
+
+        public void setUsers(List<Employee> employees) {
+            this.employees = employees;
+        }
     }
 }

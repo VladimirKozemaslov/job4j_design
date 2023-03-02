@@ -2,7 +2,6 @@ package ru.job4j.ood.generator.report;
 
 import com.google.gson.*;
 import ru.job4j.ood.generator.model.Employee;
-import ru.job4j.ood.generator.store.MemStore;
 import ru.job4j.ood.generator.store.Store;
 
 import java.lang.reflect.Type;
@@ -42,16 +41,5 @@ public class JSONReport implements Report {
     public String generate(Predicate<Employee> filter) {
         List<Employee> employees = store.findBy(filter);
         return gson.toJson(employees);
-    }
-
-    public static void main(String[] args) {
-        Calendar now = Calendar.getInstance();
-                MemStore store = new MemStore();
-        Employee worker = new Employee("Ivan", now, now, 100);
-        Employee worker2 = new Employee("Petr", now, now, 200);
-        store.add(worker);
-        store.add(worker2);
-        Report report = new JSONReport(store);
-        System.out.println(report.generate(em -> true));
     }
 }

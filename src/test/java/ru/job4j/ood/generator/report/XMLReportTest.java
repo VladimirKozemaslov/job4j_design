@@ -4,13 +4,14 @@ import org.junit.jupiter.api.Test;
 import ru.job4j.ood.generator.model.Employee;
 import ru.job4j.ood.generator.store.MemStore;
 
+import javax.xml.bind.JAXBException;
 import java.util.Calendar;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class XMLReportTest {
     @Test
-    public void whenOldGenerated() {
+    public void whenOldGenerated() throws JAXBException {
         MemStore store = new MemStore();
         Calendar date = Calendar.getInstance();
         date.set(2023, Calendar.FEBRUARY, 28);
@@ -21,6 +22,7 @@ public class XMLReportTest {
         store.add(worker2);
         store.add(worker3);
         Report report = new XMLReport(store);
+
         StringBuilder expect = new StringBuilder(
                 "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>\n"
                         + "<employees>\n"
