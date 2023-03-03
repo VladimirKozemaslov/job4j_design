@@ -18,12 +18,16 @@ public class XMLReport implements Report {
     private final Store store;
     private final Marshaller marshaller;
 
-    public XMLReport(Store store) throws JAXBException {
-        this.store = store;
-        JAXBContext context = JAXBContext.newInstance(Employees.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-        this.marshaller = marshaller;
+    public XMLReport(Store store) {
+        try {
+            this.store = store;
+            JAXBContext context = JAXBContext.newInstance(Employees.class);
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            this.marshaller = marshaller;
+        } catch (JAXBException e) {
+            throw new RuntimeException();
+        }
     }
 
     public static class CalendarAdapter extends XmlAdapter<String, Calendar> {
