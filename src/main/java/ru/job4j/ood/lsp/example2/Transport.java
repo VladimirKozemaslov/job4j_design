@@ -9,9 +9,10 @@ public class Transport {
         this.currentLoad = 0;
     }
 
-    public void load(int weight) {
+    public int load(int weight) {
         if (maxLoad <= currentLoad + weight) {
             currentLoad += weight;
+            return currentLoad;
         } else {
             throw new IllegalArgumentException("Exceeding the maximum load.");
         }

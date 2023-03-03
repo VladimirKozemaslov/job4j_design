@@ -6,7 +6,8 @@ public class DumpTruck extends Transport {
     }
 
     @Override
-    public void load(int weight) {
+    public int load(int weight) {
         currentLoad += weight;
+        return currentLoad;
     }
 }
