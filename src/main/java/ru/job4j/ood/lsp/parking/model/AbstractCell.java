@@ -1,17 +1,19 @@
 package ru.job4j.ood.lsp.parking.model;
 
-public class AbstractCell implements ParkingCell {
+public abstract class AbstractCell implements ParkingCell {
     protected int size;
     protected Car car;
     protected String id;
 
-    public AbstractCell(int size) {
+    public AbstractCell(int size, String id) {
         this.size = size;
+        this.id = id;
     }
 
     @Override
-    public void take(Car car) {
-        this.car = car;
+    public boolean take(Car car) {
+        boolean rsl = false;
+        return rsl;
     }
 
     @Override

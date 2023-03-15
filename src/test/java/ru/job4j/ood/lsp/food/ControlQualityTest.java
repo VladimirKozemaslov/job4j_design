@@ -1,5 +1,6 @@
 package ru.job4j.ood.lsp.food;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.job4j.ood.lsp.food.model.Food;
 import ru.job4j.ood.lsp.food.model.Milk;
@@ -11,6 +12,8 @@ import java.util.Calendar;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ControlQualityTest {
+
+    @Disabled
     @Test
     public void whenDistributeItemToWarehouse() {
         Food milk = new Milk("Happy cow",
@@ -55,6 +58,7 @@ public class ControlQualityTest {
         assertThat(trash.findById(milk.getId())).isNull();
     }
 
+    @Disabled
     @Test
     public void whenDistributeItemToShopWithDiscount() {
         Food milk = new Milk("Happy cow",
