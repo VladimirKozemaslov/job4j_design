@@ -1,7 +1,7 @@
 package ru.job4j.ood.lsp.parking.model;
 
 public interface ParkingCell {
-    public boolean take(Car car);
+    boolean take(AbstractCar car);
 
-    public void clear();
+    void clear();
 }

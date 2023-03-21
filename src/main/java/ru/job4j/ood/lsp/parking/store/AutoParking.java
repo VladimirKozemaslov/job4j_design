@@ -1,19 +1,13 @@
 package ru.job4j.ood.lsp.parking.store;
 
-import ru.job4j.ood.lsp.parking.model.Car;
-import ru.job4j.ood.lsp.parking.model.CargoCell;
-import ru.job4j.ood.lsp.parking.model.ParkingCell;
-import ru.job4j.ood.lsp.parking.model.PassengerCell;
+import ru.job4j.ood.lsp.parking.model.*;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class AutoParking implements Parking {
-    private List<ParkingCell> scheme;
-
-    private Map<Car, ParkingCell> parkLoad;
+    private final List<AbstractCell> scheme;
 
     public AutoParking(int passengerCellCount, int cargoCellCount, int rowSize) {
         if (rowSize < 1) {
@@ -21,7 +15,7 @@ public class AutoParking implements Parking {
         } else if (passengerCellCount < 1 && cargoCellCount < 1) {
             throw new IllegalArgumentException("Total cell count must be more than 0.");
         }
-        List<ParkingCell> scheme = new ArrayList<>();
+        List<AbstractCell> scheme = new ArrayList<>();
         char ch = 'A';
         int num = 1;
         for (int i = 0; i < passengerCellCount; i++) {
@@ -44,17 +38,58 @@ public class AutoParking implements Parking {
     }
 
     public AutoParking(int passengerCellCount, int cargoCellCount) {
-        new AutoParking(passengerCellCount, cargoCellCount, 5);
+        this(passengerCellCount, cargoCellCount, 5);
     }
 
     @Override
-    public ParkingCell park(Car car) {
-        return null;
+    public List<AbstractCell> park(AbstractCar car) {
+        List<AbstractCell> rsl = new ArrayList<>();
+        boolean isParked = false;
+        for (AbstractCell cell : scheme) {
+            if (cell.getSize() == car.getSize() && cell.isEmpty()) {
+                isParked = cell.take(car);
+                rsl.add(cell);
+                break;
+            }
+        }
+
+        if (!isParked && car.getSize() > 1) {
+            rsl = parkOnMultipleCells(car);
+        }
+
+        return rsl;
     }
 
     @Override
-    public void unPark(Car car) {
+    public List<AbstractCell> unPark(AbstractCar car) {
+        List<AbstractCell> cells = new ArrayList<>();
+        for (AbstractCell cell : scheme) {
+            if (car.equals(cell.getCar())) {
+                cell.clear();
+                cells.add(cell);
+            }
+        }
+        return cells;
+    }
 
+    private List<AbstractCell> parkOnMultipleCells(AbstractCar car) {
+        List<AbstractCell> rsl = new ArrayList<>();
+        int carSize = car.getSize();
+        int count = 0;
+        for (AbstractCell cell : scheme) {
+            if (cell.getSize() == 1 && cell.isEmpty()) {
+                count++;
+                cell.take(car);
+                rsl.add(cell);
+            } else {
+                count = 0;
+                rsl.clear();
+            }
+            if (count == carSize) {
+                break;
+            }
+        }
+        return rsl;
     }
 
     public static void main(String[] args) {

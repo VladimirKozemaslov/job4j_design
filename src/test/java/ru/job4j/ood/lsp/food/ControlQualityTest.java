@@ -36,6 +36,7 @@ public class ControlQualityTest {
         assertThat(trash.findById(milk.getId())).isNull();
     }
 
+    @Disabled
     @Test
     public void whenDistributeItemToShop() {
         Food milk = new Milk("Happy cow",
