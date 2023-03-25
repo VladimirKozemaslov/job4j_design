@@ -24,12 +24,10 @@ public class ToDoApp {
     public void init() {
         boolean run = true;
         Printer<Menu> printer = new MenuPrinter();
-        String regex = "\\d\\.+";
         Pattern choosePattern = Pattern.compile(".+");
         Pattern addPattern = Pattern.compile(".+\\+");
 
         while (run) {
-            this.showMenu(printer);
             System.out.println(getDescriptionPhrase() + System.lineSeparator());
             String input = scanner.nextLine();
             if ("+".equals(input)) {
@@ -37,6 +35,8 @@ public class ToDoApp {
             } else if ("exit".equalsIgnoreCase(input)) {
                 System.out.println("Завершение работы");
                 run = false;
+            }  else if ("menu".equalsIgnoreCase(input)) {
+                showMenu(printer);
             } else if (addPattern.matcher(input).matches()) {
                 addItemToParent(input.substring(0, input.length() - 1));
             } else if (choosePattern.matcher(input).matches()) {
@@ -55,7 +55,9 @@ public class ToDoApp {
     }
 
     private String getDescriptionPhrase() {
-        return  "Введите + для добавления элемента в корень меню."
+        return  "Введите menu для показа меню."
+                + System.lineSeparator()
+                + "Введите + для добавления элемента в корень меню."
                 + System.lineSeparator()
                 + "Введите [номер_пункта_меню]+ для добавления подпункта к пункту меню."
                 + System.lineSeparator()
