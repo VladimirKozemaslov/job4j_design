@@ -133,7 +133,6 @@ public class ControlQualityTest {
                 3.2F);
         milk3.getCreateDate().set(2023, Calendar.MARCH, 28, 9, 15);
         milk3.getExpiryDate().set(2023, Calendar.APRIL, 9, 9, 0);
-
         Food bread = new Bread("White",
                 Calendar.getInstance(),
                 Calendar.getInstance(),
@@ -158,7 +157,6 @@ public class ControlQualityTest {
                 true);
         bread3.getCreateDate().set(2023, Calendar.MARCH, 28, 9, 5);
         bread3.getExpiryDate().set(2023, Calendar.APRIL, 3, 10, 20);
-
         Food cheese = new Cheese("Lamber",
                 Calendar.getInstance(),
                 Calendar.getInstance(),
@@ -194,7 +192,6 @@ public class ControlQualityTest {
         warehouse.add(cheese);
         warehouse.add(cheese2);
         warehouse.add(cheese3);
-
         cq.resort();
         assertThat(warehouse.findAll().size()).isEqualTo(3);
         assertThat(warehouse.findByName("Happy cow")).contains(milk3);
