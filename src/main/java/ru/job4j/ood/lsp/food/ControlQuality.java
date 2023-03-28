@@ -39,10 +39,18 @@ public class ControlQuality {
         List<Food> foodList = new LinkedList<>();
         foodList.addAll(warehouse.findAll());
         foodList.addAll(shop.findAll());
-        foodList.addAll(trash.findAll());
+        clear(warehouse);
+        clear(shop);
+        clear(trash);
 
         for (Food food : foodList) {
             distribute(food);
+        }
+    }
+
+    private void clear(Store store) {
+        for (Food food : store.findAll()) {
+            store.delete(food.getId());
         }
     }
 
