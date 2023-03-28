@@ -4,6 +4,8 @@ import ru.job4j.ood.lsp.food.model.Food;
 import ru.job4j.ood.lsp.food.store.Store;
 
 import java.util.Calendar;
+import java.util.LinkedList;
+import java.util.List;
 
 public class ControlQuality {
     private final Store warehouse;
@@ -30,6 +32,17 @@ public class ControlQuality {
             shop.add(food);
         } else {
             trash.add(food);
+        }
+    }
+
+    public void resort() {
+        List<Food> foodList = new LinkedList<>();
+        foodList.addAll(warehouse.findAll());
+        foodList.addAll(shop.findAll());
+        foodList.addAll(trash.findAll());
+
+        for (Food food : foodList) {
+            distribute(food);
         }
     }
 
