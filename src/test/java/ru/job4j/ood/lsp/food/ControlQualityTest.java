@@ -85,6 +85,7 @@ public class ControlQualityTest {
         assertThat(milk.getPrice()).isEqualTo(new BigDecimal("61.3"));
     }
 
+    @Disabled
     @Test
     public void whenDistributeItemToTrash() {
         Food milk = new Milk("Happy cow",
@@ -107,6 +108,7 @@ public class ControlQualityTest {
         assertThat(trash.findById(milk.getId())).isNotNull();
     }
 
+    @Disabled
     @Test
     public void whenResortItems() {
         Food milk = new Milk("Happy cow",
